@@ -1,0 +1,21 @@
+Employee_ID,First_Name,Last_Name,Department,Position,Hire_Date,Annual_Salary,Email,Office_Location,Years_Experience,Employment_Status,Manager_ID
+E1001,Sarah,Johnson,Sales,Sales Manager,2019-03-15,85000,sarah.johnson@company.com,New York,8,Full-time,E1018
+E1002,Michael,Chen,Engineering,Senior Developer,2020-07-22,95000,michael.chen@company.com,San Francisco,10,Full-time,E1016
+E1003,Emily,Rodriguez,Marketing,Marketing Specialist,2021-01-10,62000,emily.rodriguez@company.com,Austin,4,Full-time,E1015
+E1004,James,Williams,Finance,Financial Analyst,2018-11-05,72000,james.williams@company.com,Chicago,6,Full-time,E1010
+E1005,Lisa,Brown,Human Resources,HR Coordinator,2022-04-18,58000,lisa.brown@company.com,New York,3,Full-time,E1013
+E1006,David,Martinez,Engineering,Junior Developer,2023-02-01,68000,david.martinez@company.com,San Francisco,2,Full-time,E1016
+E1007,Amanda,Taylor,Sales,Account Executive,2020-09-12,70000,amanda.taylor@company.com,Boston,5,Full-time,E1001
+E1008,Robert,Anderson,Operations,Operations Manager,2017-06-30,88000,robert.anderson@company.com,Seattle,12,Full-time,NULL
+E1009,Jennifer,Thomas,Marketing,Content Writer,2021-08-25,55000,jennifer.thomas@company.com,Austin,3,Part-time,E1015
+E1010,Christopher,Garcia,Finance,Senior Accountant,2019-12-03,78000,christopher.garcia@company.com,Chicago,9,Full-time,NULL
+E1011,Michelle,Lee,Engineering,DevOps Engineer,2020-05-14,92000,michelle.lee@company.com,San Francisco,7,Full-time,E1016
+E1012,Daniel,White,Sales,Sales Representative,2022-07-20,64000,daniel.white@company.com,New York,2,Full-time,E1001
+E1013,Jessica,Harris,Human Resources,Recruiter,2021-03-08,60000,jessica.harris@company.com,Boston,5,Full-time,NULL
+E1014,Matthew,Clark,Operations,Logistics Coordinator,2023-01-15,52000,matthew.clark@company.com,Seattle,3,Contract,E1008
+E1015,Ashley,Lewis,Marketing,Digital Marketing Manager,2018-10-11,82000,ashley.lewis@company.com,Austin,11,Full-time,NULL
+E1016,Joshua,Walker,Engineering,Software Architect,2017-04-22,115000,joshua.walker@company.com,San Francisco,15,Full-time,NULL
+E1017,Rebecca,Hall,Finance,Budget Analyst,2022-11-30,66000,rebecca.hall@company.com,Chicago,4,Full-time,E1010
+E1018,Andrew,Allen,Sales,Regional Sales Director,2016-08-17,105000,andrew.allen@company.com,New York,14,Full-time,NULL
+E1019,Stephanie,Young,Operations,Supply Chain Analyst,2021-06-05,69000,stephanie.young@company.com,Seattle,6,Full-time,E1008
+E1020,Kevin,King,Engineering,QA Engineer,2020-12-09,71000,kevin.king@company.com,San Francisco,5,Full-time,E1016
