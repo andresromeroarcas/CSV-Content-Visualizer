@@ -53,17 +53,17 @@ A modern, web-based tool for visualizing CSV files with an intuitive table inter
 ### Option 2: Download and Run Locally
 ```bash
 # Download the HTML file
-wget https://raw.githubusercontent.com/yourusername/csv-visualizer/main/index.html
+wget https://raw.githubusercontent.com/yourusername/csv-visualizer/main/csv-visualizer.html
 
 # Open in any modern browser
-open index.html
+open csv-visualizer.html
 ```
 
 ### Option 3: Clone Repository
 ```bash
 git clone https://github.com/yourusername/csv-visualizer.git
 cd csv-visualizer
-# Open index.html in your browser
+# Open csv-visualizer.html in your browser
 ```
 
 ## 📱 Browser Compatibility
@@ -92,9 +92,3 @@ cd csv-visualizer
 
 ## 📄 License
 This project is licensed under the Attribution-NonCommercial 4.0 International License - see the [LICENSE](LICENSE) file for details.
-
-
-
-**Made with ❤️ for the data community**
-
-*Stop struggling with messy CSV files - start visualizing!*
