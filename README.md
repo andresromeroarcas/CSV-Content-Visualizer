@@ -2,7 +2,7 @@
 
 A modern, web-based tool for visualizing CSV files with an intuitive table interface. Say goodbye to messy text editors and Excel's "Get Data" complications - just upload and view your CSV data instantly!
 
-![CSV Visualizer Preview](https://via.placeholder.com/800x400/059669/ffffff?text=CSV+Visualizer)
+![CSV Visualizer Preview](https://romeroarcasandres.github.io/CSV-Content-Visualizer/csv-visualizer.html)
 
 ## 🚀 Why This Tool Exists
 
@@ -54,12 +54,12 @@ A clean, browser-based tool that instantly transforms your CSV into a beautiful,
 
 ## 🌐 Live Demo
 
-**[Try it now!](https://yourusername.github.io/csv-visualizer/)**
+**[Try it now!](https://romeroarcasandres.github.io/CSV-Content-Visualizer/csv-visualizer.html)**
 
 ## 💻 Getting Started
 
 ### Option 1: Use Online (Recommended)
-1. Visit the [live demo](https://yourusername.github.io/csv-visualizer/)
+1. Visit the [live demo](https://romeroarcasandres.github.io/CSV-Content-Visualizer/csv-visualizer.html)
 2. Click "Choose CSV File" or drag & drop your file
 3. Your data appears instantly in a clean table format!
 
@@ -80,7 +80,6 @@ cd csv-visualizer
 ```
 
 ## 📱 Browser Compatibility
-
 - ✅ **Chrome 60+** - Full support
 - ✅ **Firefox 55+** - Full support  
 - ✅ **Safari 12+** - Full support
@@ -88,7 +87,6 @@ cd csv-visualizer
 - ✅ **Mobile browsers** - iOS Safari, Chrome Mobile
 
 ## 🛠️ Technical Details
-
 - **Pure HTML/CSS/JavaScript** - No frameworks, no dependencies
 - **Client-side processing** - All parsing happens in your browser
 - **Secure** - Your data never leaves your device
@@ -106,29 +104,12 @@ cd csv-visualizer
 - [ ] **Custom quote characters** (planned)
 
 ## 📊 Performance
-
 - **File size limit**: Tested up to 10MB+ CSV files
 - **Processing speed**: Instant for most files (<1MB), ~2-3 seconds for larger files
 - **Memory usage**: Efficient in-browser processing
 - **Responsive**: Smooth scrolling even with thousands of rows
 
-## 🎨 Screenshots
-
-### Main Interface
-![Main Interface](https://via.placeholder.com/600x300/059669/ffffff?text=Clean+Upload+Interface)
-
-### Table View
-![Table View](https://via.placeholder.com/600x400/1e293b/ffffff?text=Professional+Table+Display)
-
-### Search & Filter
-![Search Feature](https://via.placeholder.com/600x200/3b82f6/ffffff?text=Powerful+Search+%26+Filter)
-
-### Statistics Dashboard
-![Statistics](https://via.placeholder.com/600x150/10b981/ffffff?text=Real-time+Data+Insights)
-
-
 ## 📄 License
-
 This project is licensed under the Attribution-NonCommercial 4.0 International License - see the [LICENSE](LICENSE) file for details.
 
 
