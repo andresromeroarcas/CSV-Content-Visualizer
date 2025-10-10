@@ -2,19 +2,6 @@
 
 A modern, web-based tool for visualizing CSV files with an intuitive table interface. Say goodbye to messy text editors and Excel's "Get Data" complications - just upload and view your CSV data instantly!
 
-![CSV Visualizer Preview](https://romeroarcasandres.github.io/CSV-Content-Visualizer/csv-visualizer.html)
-
-## 🚀 Why This Tool Exists
-
-**The Problem**: 
-- Text editors make CSV files look messy and unreadable
-- Excel requires multiple steps with "Get Data" functionality
-- Online CSV viewers often lack features or require registration
-- Need a quick way to inspect CSV structure and content
-
-**The Solution**: 
-A clean, browser-based tool that instantly transforms your CSV into a beautiful, searchable table.
-
 ## ✨ Features
 
 ### 📊 **Smart CSV Parsing**
@@ -102,12 +89,6 @@ cd csv-visualizer
 - [x] **Unicode/UTF-8 support**
 - [ ] **Multi-line fields** (planned)
 - [ ] **Custom quote characters** (planned)
-
-## 📊 Performance
-- **File size limit**: Tested up to 10MB+ CSV files
-- **Processing speed**: Instant for most files (<1MB), ~2-3 seconds for larger files
-- **Memory usage**: Efficient in-browser processing
-- **Responsive**: Smooth scrolling even with thousands of rows
 
 ## 📄 License
 This project is licensed under the Attribution-NonCommercial 4.0 International License - see the [LICENSE](LICENSE) file for details.
