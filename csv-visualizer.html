@@ -51,6 +51,14 @@
             padding: 40px;
             text-align: center;
             border-bottom: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .upload-section.drag-over {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border: 3px dashed #10b981;
+            border-radius: 12px;
+            transform: scale(1.02);
         }
 
         .file-input-wrapper {
@@ -65,6 +73,7 @@
             font-weight: 600;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            pointer-events: auto;
         }
 
         .file-input-wrapper:hover {
@@ -141,6 +150,90 @@
         .search-input:focus {
             outline: none;
             border-color: #10b981;
+        }
+
+        .filters-container {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .filters-header h3 {
+            color: #1e293b;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .clear-filters-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clear-filters-btn:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+        }
+
+        .column-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .filter-group input {
+            padding: 8px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            background: white;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-group input:focus {
+            outline: none;
+            border-color: #10b981;
+        }
+
+        .filter-group input::placeholder {
+            color: #94a3b8;
+        }
+
+        .active-filters-count {
+            background: #10b981;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 10px;
         }
 
         .download-btn {
@@ -321,11 +414,12 @@
             <p>Upload and visualize your CSV files with ease</p>
         </div>
 
-        <div class="upload-section">
+        <div class="upload-section" id="uploadSection">
             <label for="fileInput" class="file-input-wrapper">
                 📊 Choose CSV File
                 <input type="file" id="fileInput" class="file-input" accept=".csv,.txt">
             </label>
+            <p style="margin-top: 20px; color: #64748b; font-size: 0.95rem;">or drag and drop your CSV file here</p>
             <div id="fileInfo" class="file-info"></div>
             <div id="errorMessage" class="error-message"></div>
         </div>
@@ -344,10 +438,20 @@
                         <option value="|">Pipe (|)</option>
                     </select>
                 </div>
-                
+
                 <div class="search-container">
                     <input type="text" id="searchInput" class="search-input" placeholder="Search across all columns...">
                     <button id="downloadBtn" class="download-btn">📥 Download Filtered CSV</button>
+                </div>
+
+                <div id="filtersContainer" class="filters-container" style="display: none;">
+                    <div class="filters-header">
+                        <div>
+                            <h3>Column Filters<span id="activeFiltersCount" class="active-filters-count" style="display: none;"></span></h3>
+                        </div>
+                        <button id="clearFiltersBtn" class="clear-filters-btn">Clear All Filters</button>
+                    </div>
+                    <div id="columnFilters" class="column-filters"></div>
                 </div>
             </div>
 
@@ -374,36 +478,29 @@
         let filteredData = [];
         let headers = [];
         let currentDelimiter = ',';
+        let columnFilters = {};
 
         document.getElementById('fileInput').addEventListener('change', handleFileSelect);
         document.getElementById('searchInput').addEventListener('input', handleSearch);
         document.getElementById('delimiterSelect').addEventListener('change', handleDelimiterChange);
         document.getElementById('downloadBtn').addEventListener('click', downloadFilteredCSV);
+        document.getElementById('clearFiltersBtn').addEventListener('click', clearAllFilters);
+
+        // Drag and drop event listeners
+        const uploadSection = document.getElementById('uploadSection');
+
+        uploadSection.addEventListener('dragover', handleDragOver);
+        uploadSection.addEventListener('dragleave', handleDragLeave);
+        uploadSection.addEventListener('drop', handleDrop);
+
+        // Prevent default drag behavior on the whole document
+        document.addEventListener('dragover', (e) => e.preventDefault());
+        document.addEventListener('drop', (e) => e.preventDefault());
 
         function handleFileSelect(event) {
             const file = event.target.files[0];
             if (!file) return;
-
-            const fileInfo = document.getElementById('fileInfo');
-            const errorMessage = document.getElementById('errorMessage');
-            
-            fileInfo.innerHTML = `
-                <strong>File:</strong> ${file.name}<br>
-                <strong>Size:</strong> ${(file.size / 1024).toFixed(2)} KB<br>
-                <strong>Type:</strong> ${file.type || 'Unknown'}
-            `;
-            fileInfo.style.display = 'block';
-            errorMessage.style.display = 'none';
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    parseCSV(e.target.result);
-                } catch (error) {
-                    showError('Error reading file: ' + error.message);
-                }
-            };
-            reader.readAsText(file);
+            processFile(file);
         }
 
         function parseCSV(csvContent) {
@@ -458,9 +555,10 @@
                 }
 
                 filteredData = [...csvData];
+                createColumnFilters();
                 renderTable();
                 showStats();
-                
+
                 // Show controls and table
                 document.getElementById('controlsContainer').style.display = 'block';
                 document.getElementById('tableContainer').style.display = 'block';
@@ -598,20 +696,107 @@
             statsContainer.style.display = 'grid';
         }
 
-        function handleSearch() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            
-            if (searchTerm === '') {
-                filteredData = [...csvData];
+        function createColumnFilters() {
+            const filtersContainer = document.getElementById('columnFilters');
+            const filtersSection = document.getElementById('filtersContainer');
+            filtersContainer.innerHTML = '';
+            columnFilters = {};
+
+            headers.forEach((header, colIndex) => {
+                // Create filter group
+                const filterGroup = document.createElement('div');
+                filterGroup.className = 'filter-group';
+
+                const label = document.createElement('label');
+                label.textContent = header || `Column ${colIndex + 1}`;
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.id = `filter-${colIndex}`;
+                input.dataset.columnIndex = colIndex;
+                input.placeholder = `Filter ${header || 'column'}...`;
+
+                // Add event listener for real-time filtering
+                input.addEventListener('input', handleColumnFilter);
+
+                filterGroup.appendChild(label);
+                filterGroup.appendChild(input);
+                filtersContainer.appendChild(filterGroup);
+            });
+
+            filtersSection.style.display = 'block';
+        }
+
+        function handleColumnFilter(event) {
+            const colIndex = parseInt(event.target.dataset.columnIndex);
+            const filterValue = event.target.value.toLowerCase().trim();
+
+            if (filterValue === '') {
+                delete columnFilters[colIndex];
             } else {
-                filteredData = csvData.filter(row => 
-                    row.some(cell => 
+                columnFilters[colIndex] = filterValue;
+            }
+
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            // Start with all data
+            let data = [...csvData];
+
+            // Apply column filters
+            Object.keys(columnFilters).forEach(colIndex => {
+                const filterValue = columnFilters[colIndex];
+                data = data.filter(row => {
+                    const cellValue = (row[colIndex] || '').toString().toLowerCase();
+                    return cellValue.includes(filterValue);
+                });
+            });
+
+            // Apply search filter
+            if (searchTerm !== '') {
+                data = data.filter(row =>
+                    row.some(cell =>
                         cell && cell.toString().toLowerCase().includes(searchTerm)
                     )
                 );
             }
-            
+
+            filteredData = data;
             renderTable();
+            updateActiveFiltersCount();
+        }
+
+        function updateActiveFiltersCount() {
+            const count = Object.keys(columnFilters).length;
+            const badge = document.getElementById('activeFiltersCount');
+
+            if (count > 0) {
+                badge.textContent = count;
+                badge.style.display = 'inline-block';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function clearAllFilters() {
+            columnFilters = {};
+
+            // Reset all filter inputs
+            headers.forEach((header, colIndex) => {
+                const input = document.getElementById(`filter-${colIndex}`);
+                if (input) {
+                    input.value = '';
+                }
+            });
+
+            applyFilters();
+        }
+
+        function handleSearch() {
+            applyFilters();
         }
 
         function downloadFilteredCSV() {
@@ -646,6 +831,62 @@
             const errorElement = document.getElementById('errorMessage');
             errorElement.textContent = message;
             errorElement.style.display = 'block';
+        }
+
+        // Drag and drop handlers
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadSection.classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadSection.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadSection.classList.remove('drag-over');
+
+            const files = e.dataTransfer.files;
+            if (files.length === 0) return;
+
+            const file = files[0];
+
+            // Check if it's a CSV or TXT file
+            if (!file.name.match(/\.(csv|txt)$/i)) {
+                showError('Please drop a CSV or TXT file');
+                return;
+            }
+
+            // Process the file using the same handler
+            processFile(file);
+        }
+
+        function processFile(file) {
+            const fileInfo = document.getElementById('fileInfo');
+            const errorMessage = document.getElementById('errorMessage');
+
+            fileInfo.innerHTML = `
+                <strong>File:</strong> ${file.name}<br>
+                <strong>Size:</strong> ${(file.size / 1024).toFixed(2)} KB<br>
+                <strong>Type:</strong> ${file.type || 'Unknown'}
+            `;
+            fileInfo.style.display = 'block';
+            errorMessage.style.display = 'none';
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    parseCSV(e.target.result);
+                } catch (error) {
+                    showError('Error reading file: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
         }
     </script>
 </body>
