@@ -41,12 +41,12 @@ A modern, web-based tool for visualizing CSV files with an intuitive table inter
 
 ## 🌐 Live Demo
 
-**[Try it now!](https://romeroarcasandres.github.io/CSV-Content-Visualizer/csv-visualizer.html)**
+**[Try it now!](https://andresromeroarcas.github.io/CSV-Content-Visualizer/csv-visualizer.html)**
 
 ## 💻 Getting Started
 
 ### Option 1: Use Online (Recommended)
-1. Visit the [live demo](https://romeroarcasandres.github.io/CSV-Content-Visualizer/csv-visualizer.html)
+1. Visit the [live demo](https://andresromeroarcas.github.io/CSV-Content-Visualizer/csv-visualizer.html)
 2. Click "Choose CSV File" or drag & drop your file
 3. Your data appears instantly in a clean table format!
 
